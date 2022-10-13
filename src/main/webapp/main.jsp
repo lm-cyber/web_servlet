@@ -60,7 +60,7 @@
         <label for="_r">R:</label>
         <input type="text" id="_r" name="_r" placeholder="(1 , 4)"><br>
 
-        <input id="b" onclick="funcClick()" class="button" type="button" value="Send">
+        <input id="send" onclick="funcClick()" class="button" type="button" value="Send">
 
     </form>
 

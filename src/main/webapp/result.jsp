@@ -17,9 +17,9 @@
 <div>
     hello asdasdas
 
-    <%= (String)request.getParameter("x") + " "%>
-    <%= (String)request.getParameter("y") + " "%>
-    <%= (String)request.getParameter("r") + " "%>
+    <%= (String)request.getParameter("_x") + " "%>
+    <%= (String)request.getParameter("_y") + " "%>
+    <%= (String)request.getParameter("_r") + " "%>
 </div>
 
 </body>

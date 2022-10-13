@@ -3,33 +3,34 @@ const FLOAT_REGEX = /^-?\d+(?:\.\d+)?$/;
 
 
 function funcClick() {
-    let xP = document.getElementById("X");
+    let xP = document.getElementById("_x");
     const x = parseFloat(xP.options[xP.selectedIndex].value);
-    const y = document.getElementById("Y").value;
-    const r = document.getElementById("R").value;
+    const y = document.getElementById("_y").value;
+    const r = document.getElementById("_r").value;
 
     if(!validationFloat(y)) {
         alert("Y not validation");
-        document.getElementById("Y").value = ""
+        document.getElementById("_y").value = ""
         return;
     }
     if(!domainFloat(parseFloat(y), -5., 3. )) {
         alert("Y value out of bounds");
-        document.getElementById("Y").value = ""
+        document.getElementById("_y").value = ""
         return;
 
     }
     if(!validationFloat(r)) {
         alert("R not validation");
-        document.getElementById("R").value = ""
+        document.getElementById("_r").value = ""
         return;
     }
     if(!domainFloat(parseFloat(r), 1., 4. )) {
         alert("R value out of bounds");
-        document.getElementById("R").value = ""
+        document.getElementById("_r").value = ""
         return;
     }
-	document.getElementById("main_form").submit();
+	// document.getElementById("input-form").submit();
+    document.forms["input-form"].submit();
 }
 function domainFloat(floatNum, leftBorder, rightBorder) {
     if(floatNum >= rightBorder || floatNum <= leftBorder) {

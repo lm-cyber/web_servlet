@@ -85,5 +85,55 @@ function runGrapher() {
         drawGraph,
     };
 }
+function getR() {
+    let r = 0;
+
+    const form = document.getElementById('form');
+
+    if (form) {
+        const formData = new FormData(form);
+        const parsedR = parseFloat(formData.get('r'));
+        r = (isNaN(parsedR) ? 0 : parsedR);
+    } else if (POINTS.length > 0) {
+        r = POINTS[0].r;
+    }
+
+    return r;
+}
 
 runGrapher().drawGraph();
+if (canvas.ariaDisabled !== 'true') {
+    canvas.addEventListener('mousedown', (ev) => {
+        const r = getR();
+        if (r === 0) {
+            alert('Please select R first');
+            return;
+        }
+
+        const x = Math.round((ev.offsetX / canvas.width - 0.5) * 3 * r * 100) / 100;
+        const y = Math.round((ev.offsetY / canvas.height - 0.5) * -3 * r * 100) / 100;
+
+        const form = document.getElementById('form');
+
+        // If one or both form inputs are selections, we will need a
+        // hidden option that contains the graph click value.
+        if (document.getElementById('input-x')) document.getElementById('input-x').value = x;
+        form['x'].value = x;
+        if (document.getElementById('input-y')) document.getElementById('input-y').value = y;
+        form['y'].value = y;
+
+        form.submit();
+    });
+
+    canvas.addEventListener('mousemove', (ev) => {
+        renderGraph();
+        ctx.fillStyle = `rgb(${themeColor[0]}, ${themeColor[1]}, ${themeColor[2]})`;
+        ctx.beginPath();
+        ctx.arc(ev.offsetX, ev.offsetY, 5, 0, Math.PI * 2);
+        ctx.fill();
+    });
+
+    canvas.addEventListener('mouseleave', renderGraph);
+
+    document.getElementById('form').addEventListener('change', renderGraph);
+}

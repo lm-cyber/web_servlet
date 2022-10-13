@@ -1,7 +1,8 @@
 package com.example.web_servlet;
 
 import com.example.web_servlet.data.ResponseData;
-import com.example.web_servlet.data.Validator;
+import com.example.web_servlet.tool.Validator;
+import com.example.web_servlet.tool.CheckZone;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -9,10 +10,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.awt.*;
-import java.awt.geom.Area;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -33,7 +31,7 @@ public class AreaCheckServlet extends HttpServlet {
             return;
         }
 
-        if (validator.validate(x,y,r)) {
+        if (!validator.validate(x,y,r)) {
             response.sendError(400, "Invalid value");
             return;
         }
@@ -41,7 +39,7 @@ public class AreaCheckServlet extends HttpServlet {
 
 
         final long end = System.nanoTime();
-        ResponseData responseData = new ResponseData(x,y,r, LocalDateTime.now(),end-start,true);
+        ResponseData responseData = new ResponseData(x,y,r, LocalDateTime.now(),end-start, CheckZone.checkAria(x,y,r));
 
         ServletContext servletContext = request.getServletContext();
         if(servletContext.getAttribute("data") == null){

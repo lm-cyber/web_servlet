@@ -64,9 +64,10 @@
 
     </form>
 
-            <div>
-                <button onclick="location.reload();">Go to main page</button>
-            </div>
+    <form id="clear_form" action="<%= request.getContextPath()%>" method="GET">
+        <button name="clear" id="clear" value="clear">clear</button>
+    </form>
+
 
 
     <%
@@ -76,8 +77,34 @@
 
 
     %>
-    <%=arrayList.toString()%>
-        </main>
+     <div id="results" class="panel">
+            <h1>Results</h1>
+            <div class="table-wrapper">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Attempt #</th>
+                            <th>X</th>
+                            <th>Y</th>
+                            <th>R</th>
+                            <th>Result</th>
+                            <th>Attempt time</th>
+                            <th>Processing time</th>
+                        </tr>
+                        <% StringBuilder info = new StringBuilder();
+                            Integer i=1;
+                            for (ResponseData responseData: arrayList) {
+                            info.append("<tr>"+"<td>"+i+"</td>"+responseData.block()+"</tr>");
+
+                        }%>
+                        <%=info.toString()%>
+                    </tbody>
+                </table>
+            </div>
+         <div>
+                <button onclick="location.reload();">Go to main page</button>
+         </div>
+</main>
 
 
 </body>

@@ -1,4 +1,4 @@
-package com.example.web_servlet;
+package com.example.web_servlet.tool;
 
 public class CheckZone {
 

@@ -1,6 +1,13 @@
 
+const canvas = document.getElementById("graph");
+let w = canvas.width, h = canvas.height;
+
+const hatchWidth = 20 / 2;
+const baseHatchGap=30;
+var hatchGap = 20;
+var rValue = 1;
+
 function runGrapher() {
-    const canvas = document.getElementById("graph");
     const width = canvas.width;
     const height = canvas.height;
     const ctx = canvas.getContext("2d");
@@ -86,54 +93,53 @@ function runGrapher() {
     };
 }
 function getR() {
-    let r = 0;
+    const r = document.getElementById("_r").value;
 
-    const form = document.getElementById('form');
-
-    if (form) {
-        const formData = new FormData(form);
-        const parsedR = parseFloat(formData.get('r'));
-        r = (isNaN(parsedR) ? 0 : parsedR);
-    } else if (POINTS.length > 0) {
-        r = POINTS[0].r;
-    }
 
     return r;
 }
 
 runGrapher().drawGraph();
-if (canvas.ariaDisabled !== 'true') {
-    canvas.addEventListener('mousedown', (ev) => {
-        const r = getR();
-        if (r === 0) {
-            alert('Please select R first');
+function getMousePosition(e) {
+    var rect = canvas.getBoundingClientRect();
+
+    var mouseX = e.offsetX * canvas.width / canvas.clientWidth | 0;
+    var mouseY = e.offsetY * canvas.height / canvas.clientHeight | 0;
+    return {x: mouseX, y: mouseY};
+}
+
+
+canvas.addEventListener('click', (event) => {
+    if (!isNaN(getR())&&validationFloat(getR())) {
+        const x = getMousePosition(event).x;
+        const y = getMousePosition(event).y;
+        const xCenter = Math.round((x - w/2) / (hatchGap * (2/rValue))*1000)/1000,
+            yCenter = Math.round((h/2 - y) / (hatchGap * (2/rValue))*1000)/1000;
+        console.log(xCenter, yCenter);
+
+        if(xCenter>2||xCenter<-2) {
+            alert("x coordinate out of range(-2,2)");
             return;
         }
+        if(yCenter>3||yCenter<-5) {
+            alert("y coordinate out of range(-5,3)");
+            return;
+        }
+        const params = {
+            'x_coordinate' : xCenter,
+            'y_coordinate': yCenter,
+            'r_coordinate': getR(),
+            'timezone': new Date().getTimezoneOffset()
+        }
 
-        const x = Math.round((ev.offsetX / canvas.width - 0.5) * 3 * r * 100) / 100;
-        const y = Math.round((ev.offsetY / canvas.height - 0.5) * -3 * r * 100) / 100;
+        let xP = document.getElementById("_x");
+        xP.options[xP.selectedIndex].value = xCenter.toString();
+        document.getElementById("_y").value = yCenter.toString();
 
-        const form = document.getElementById('form');
+        document.forms["input-form"].submit();
 
-        // If one or both form inputs are selections, we will need a
-        // hidden option that contains the graph click value.
-        if (document.getElementById('input-x')) document.getElementById('input-x').value = x;
-        form['x'].value = x;
-        if (document.getElementById('input-y')) document.getElementById('input-y').value = y;
-        form['y'].value = y;
+    } else {
+        alert("Error: R field is incorrect!")
+    }
+});
 
-        form.submit();
-    });
-
-    canvas.addEventListener('mousemove', (ev) => {
-        renderGraph();
-        ctx.fillStyle = `rgb(${themeColor[0]}, ${themeColor[1]}, ${themeColor[2]})`;
-        ctx.beginPath();
-        ctx.arc(ev.offsetX, ev.offsetY, 5, 0, Math.PI * 2);
-        ctx.fill();
-    });
-
-    canvas.addEventListener('mouseleave', renderGraph);
-
-    document.getElementById('form').addEventListener('change', renderGraph);
-}

@@ -1,4 +1,4 @@
-package com.example.web_servlet.data;
+package com.example.web_servlet.tool;
 
 import com.sun.source.tree.DoWhileLoopTree;
 
@@ -17,6 +17,6 @@ public class Validator {
     }
 
     public boolean validate(Double x, Double y, Double r) {
-        return x < maxX && x > minX && y < maxY && y > minY && r < maxR && r > minR;
+        return x <= maxX && x >= minX && y <= maxY && y >= minY && r <= maxR && r >= minR;
     }
 }

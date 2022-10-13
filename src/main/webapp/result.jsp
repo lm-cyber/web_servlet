@@ -45,9 +45,27 @@
 
 
     %>
-        <%=arrayList.get(arrayList.size()-1)%>
+    <div id="results" class="panel">
+        <h1>Results</h1>
+        <div class="table-wrapper">
+            <table>
+                <tbody>
+                <tr>
+                    <th>X</th>
+                    <th>Y</th>
+                    <th>R</th>
+                    <th>Result</th>
+                    <th>Attempt time</th>
+                    <th>Processing time</th>
+                </tr>
+                <%=
+                        "<tr>"+arrayList.get(arrayList.size()-1).block()+"</tr>"
 
-
+                    %>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <div>
         <a href="<%= request.getContextPath() %>/" class="row-fill"><button>Return</button></a>

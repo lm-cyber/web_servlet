@@ -32,4 +32,14 @@ public class ResponseData {
                 ", hit=" + hit +
                 "}\n";
     }
+    public String block() {
+        return
+                "<td>" + x + "</td>" +
+                "<td>" + y + "</td>" +
+                "<td>" + r + "</td>" +
+                "<td>" + attemptTime.toString() + "</td>" +
+                "<td>" + processTime + "</td>" +
+                "<td>" + (hit ? "HIT" : "MISS") + "</td>"
+                ;
+    }
 }

@@ -1,3 +1,5 @@
+<%@ page import="com.example.web_servlet.data.ResponseData" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
@@ -67,6 +69,14 @@
             </div>
 
 
+    <%
+        ServletContext servletContext = request.getServletContext();
+        ArrayList<ResponseData> arrayList = ((ArrayList<ResponseData>) servletContext.getAttribute("data"));
+
+
+
+    %>
+    <%=arrayList.toString()%>
         </main>
 
 

@@ -8,6 +8,23 @@
     <meta charset="UTF-8">
     <title>lab2</title>
 
+    <%
+        ServletContext servletContext = request.getServletContext();
+        ArrayList<ResponseData> arrayList = ((ArrayList<ResponseData>) servletContext.getAttribute("data"));
+
+
+
+    %>
+    <script>
+        const POINTS = [
+            {
+                x: <%= arrayList.get(arrayList.size()-1).getX() %>,
+                y: <%= arrayList.get(arrayList.size()-1).getY() %>,
+                r: <%= arrayList.get(arrayList.size()-1).getR() %>,
+            }
+        ]
+
+    </script>
     <script defer src="<%= request.getContextPath() %>/js/canvasXOY.js"></script>
     <script defer src="<%= request.getContextPath() %>/js/validation.js"></script>
 
@@ -38,13 +55,7 @@
 <main>
 
 
-    <%
-        ServletContext servletContext = request.getServletContext();
-        ArrayList<ResponseData> arrayList = ((ArrayList<ResponseData>) servletContext.getAttribute("data"));
 
-
-
-    %>
     <div id="results" class="panel">
         <h1>Results</h1>
         <div class="table-wrapper">

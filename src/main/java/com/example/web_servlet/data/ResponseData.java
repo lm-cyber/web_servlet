@@ -2,9 +2,12 @@ package com.example.web_servlet.data;
 
 import java.sql.Time;
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class ResponseData {
+    private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     private final double x;
     private final double y;
     private final double r;
@@ -19,6 +22,19 @@ public class ResponseData {
         this.attemptTime = attemptTime;
         this.processTime = processTime;
         this.hit = hit;
+
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double getR() {
+        return r;
     }
 
     @Override
@@ -34,11 +50,11 @@ public class ResponseData {
     }
     public String block() {
         return
-                "<td>" + x + "</td>" +
-                "<td>" + y + "</td>" +
-                "<td>" + r + "</td>" +
-                "<td>" + attemptTime.toString() + "</td>" +
-                "<td>" + processTime + "</td>" +
+                "<td class=\"xResult\">" + x + "</td>" +
+                "<td class=\"yResult\">" + y + "</td>" +
+                "<td class=\"rResult\">" + r + "</td>" +
+                "<td>" + attemptTime.format(formatter) + "</td>" +
+                "<td>" + processTime/1000 + "ms" + "</td>" +
                 "<td>" + (hit ? "HIT" : "MISS") + "</td>"
                 ;
     }

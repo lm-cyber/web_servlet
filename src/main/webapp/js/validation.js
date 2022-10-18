@@ -42,3 +42,9 @@ function domainFloat(floatNum, leftBorder, rightBorder) {
 function validationFloat(strFloat) {
     return FLOAT_REGEX.test(strFloat);
 }
+
+
+document.getElementById('input-form').addEventListener('change', () => runGrapher().drawGraph());
+document.getElementById('_r').addEventListener('input', () => runGrapher().drawGraph());
+
+

@@ -7,13 +7,12 @@ const baseHatchGap=30;
 var hatchGap = 20;
 var rValue = 1;
 
+const width = canvas.width;
+const height = canvas.height;
+const ctx = canvas.getContext("2d");
 function runGrapher() {
-    const width = canvas.width;
-    const height = canvas.height;
-    const ctx = canvas.getContext("2d");
 
     const FIGURE_COLOR = "#567efb99";
-    const points = [];
 
     function drawGraph() {
         ctx.font = "13px sans-serif";
@@ -74,15 +73,19 @@ function runGrapher() {
             ctx.fillText(labels[i - 1], width / 2 + 7, height - (i * height) / 6);
         }
 
-        const r = getR();
 
-        points.forEach((point, index) => {
+
+
+        POINTS.forEach((point, index) => {
+            const r = getR()?getR():point.r;
             const x = ((point.x / r) * width) / 3 + width / 2;
             const y = ((-point.y / r) * height) / 3 + height / 2;
 
-            ctx.fillStyle = point.color;
+
+            ctx.fillStyle = "#FF0000";
+
             ctx.beginPath();
-            ctx.arc(x, y, 5, 0, Math.PI * 2);
+            ctx.arc(x, y, 5, 0, Math.PI * 2,true);
             ctx.fill();
         });
     }
@@ -93,9 +96,9 @@ function runGrapher() {
     };
 }
 function getR() {
-    const r = document.getElementById("_r").value;
 
-
+    const docR = document.getElementById("_r");
+    const r = docR?docR.value:0;
     return r;
 }
 
@@ -107,6 +110,7 @@ function getMousePosition(e) {
     var mouseY = e.offsetY * canvas.height / canvas.clientHeight | 0;
     return {x: mouseX, y: mouseY};
 }
+
 
 
 canvas.addEventListener('click', (event) => {
@@ -125,12 +129,7 @@ canvas.addEventListener('click', (event) => {
             alert("y coordinate out of range(-5,3)");
             return;
         }
-        const params = {
-            'x_coordinate' : xCenter,
-            'y_coordinate': yCenter,
-            'r_coordinate': getR(),
-            'timezone': new Date().getTimezoneOffset()
-        }
+
 
         let xP = document.getElementById("_x");
         xP.options[xP.selectedIndex].value = xCenter.toString();
@@ -142,4 +141,5 @@ canvas.addEventListener('click', (event) => {
         alert("Error: R field is incorrect!")
     }
 });
+
 
